@@ -6,7 +6,7 @@ class Api::ActorsController < ApplicationController
   end
 
   def create
-    @actor = Actor.create(
+    @actor = Actor.new(
         first_name: params[:first_name],
         last_name: params[:last_name],
         known_for: params[:known_for],
@@ -14,7 +14,12 @@ class Api::ActorsController < ApplicationController
         age: params[:age]
 
     )
-    render "show.json.jb"
+    if @actor.save
+      render "show.json.jb"
+    else 
+      render json: { error: @actor.errors.full_messages }, status: 422
+    end
+    
   end
 
   def show
@@ -29,8 +34,12 @@ class Api::ActorsController < ApplicationController
     @actor.known_for = params[:known_for] || @actor.known_for
     @actor.gender = params[:gender] || @actor.gender
     @actor.age = params[:age] || @actor.age
-    @actor.save
-    render "show.json.jb"
+    
+    if @actor.save
+      render "show.json.jb"
+    else 
+      render json: { error: @actor.errors.full_messages }, status: 422
+    end
   end
 
   def destroy
