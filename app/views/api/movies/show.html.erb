@@ -1,0 +1,22 @@
+<h1><%= @movie.title %></h1>
+
+<form action="/movies" method="get">
+  <div>
+    Genres:
+    <select name="genre_id" id="">
+      <% @movie.genres.each do |genre| %>
+        <option value="genre.id"><%= genre.name %></option>
+      <% end %>
+    </select>
+  </div>
+  <div>
+    More Movie info
+    <select name="movie_info" id="">
+      <option value="movie.year"><%= @movie.year %></option>
+      <option value="movie.director"><%= @movie.director %></option>
+    </select>
+  </div>
+  <div>
+    Movie Plot: <p><%= @movie.plot %></p> 
+  </div>
+</form>
